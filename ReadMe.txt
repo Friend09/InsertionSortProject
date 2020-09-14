@@ -31,16 +31,6 @@ noting the elapsed time for each InsertionSort method.
 •	Execute program
 
 
-
-*Time Complexity*
-Insertion Sort w/ Linear Search
-
-T(n) = 
-
-Insertion Sort w/ Binary Search
-
-T(n) = 
-
 *Comments*
 When running the code, there will be some cases where the results will reflect
 that the Linear Search portion of the algorithm will outperform the 
