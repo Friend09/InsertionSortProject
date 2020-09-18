@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-
+using System.Linq;
 
 namespace InsertionSortProject
 {
@@ -10,20 +11,26 @@ namespace InsertionSortProject
         {
             int Min = 100;
             int Max = 400;
-            int arrLen = 30000;
+            int arrLen = 3000;
 
 
-            int[] unsorted = CreateRandomArray(Min, Max, arrLen);
+            int[] unsorted =  CreateRandomArray(Min, Max, arrLen);
+            List<int> unsorted1 = new List<int>(); 
+            List<int> unsorted2 = new List<int>();
+
+            unsorted1 = unsorted.OfType<int>().ToList();
+            unsorted2 = unsorted.OfType<int>().ToList();
 
             var watch1 = new Stopwatch();
             var watch2 = new Stopwatch();
 
             watch1.Start();
-            int[] sorted1 = InsertionLinearSort(unsorted);
+            List<int> sorted1 = InsertionLinearSort(unsorted1);
             watch1.Stop();
 
+            
             watch2.Start();
-            int[] sorted2 = InsertionBinarySort(unsorted);
+            List<int> sorted2 = InsertionBinarySort(unsorted2);
             watch2.Stop();
 
 
@@ -44,9 +51,9 @@ namespace InsertionSortProject
             return ranArr;
         }
 
-        public static int[] InsertionLinearSort(int[] instance)
+        public static List<int> InsertionLinearSort(List<int> instance)
         {
-            for (int j = 1; j < instance.Length; j++)  
+            for (int j = 1; j < instance.Count; j++)  
             {
                 var key = instance[j];  
                 int i = j - 1;  
@@ -62,11 +69,11 @@ namespace InsertionSortProject
             return instance;
         }
 
-        public static int[] InsertionBinarySort(int[] instance)
+        public static List<int> InsertionBinarySort(List<int> instance)
         {
             int pos = 0;
 
-            for (int j = 1; j < instance.Length; j++)
+            for (int j = 1; j < instance.Count; j++)
             {
                 var key = instance[j];
 
@@ -75,7 +82,7 @@ namespace InsertionSortProject
                 instance[pos] = instance[i];
                 int location = BinarySearch(instance, 0, j, key);
 
-                while (i >= location)
+                while (i >= location && instance[i] > key)
                 {
                     instance[i + 1] = instance[i];
                     i--;
@@ -88,7 +95,7 @@ namespace InsertionSortProject
             return instance;
         }
 
-        public static int BinarySearch(int[] sortedArray, int l, int h, int key)
+        public static int BinarySearch(List<int> sortedArray, int l, int h, int key)
         {
             if (h <= l)
                 return (key > sortedArray[l]) ? l + 1 : l;
@@ -103,12 +110,11 @@ namespace InsertionSortProject
             }
             else
                 return BinarySearch(sortedArray, mid + 1, h, key);
-
         }
 
-        public static int LinearSearch(int[] sortedArray, int key)
+        public static int LinearSearch(List<int> sortedArray, int key)
         {
-            for(int i = 0; i < sortedArray.Length; i++) 
+            for(int i = 0; i < sortedArray.Count; i++) 
             {
                 if(key <= sortedArray[i])  
                 {
@@ -119,4 +125,5 @@ namespace InsertionSortProject
         }
 
     }
+
 }
