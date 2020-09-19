@@ -11,7 +11,7 @@ namespace InsertionSortProject
         {
             int Min = 100;
             int Max = 400;
-            int arrLen = 3000;
+            int arrLen = 30000;
 
 
             int[] unsorted =  CreateRandomArray(Min, Max, arrLen);
@@ -53,43 +53,37 @@ namespace InsertionSortProject
 
         public static List<int> InsertionLinearSort(List<int> instance)
         {
-            for (int j = 1; j < instance.Count; j++)  
+            for (int j = 1; j < instance.Count; j++)   // T(n) = n
             {
-                var key = instance[j];  
-                int i = j - 1;  
-                int location = LinearSearch(instance, key);
+                var key = instance[j];   // T(n) = n - 1 
+                int i = j - 1;   // T(n) = n - 1 
+                int location = LinearSearch(instance, key); // T(n) = n(n -1)
 
-                while (i >= location && instance[i] > key) 
+                while (i >= location && instance[i] > key) // The while loop based on average case will execute n(n - 1) /2
                 {
-                    instance[i + 1] = instance[i]; 
-                    i = i - 1;                     
+                    instance[i + 1] = instance[i]; // T(n) = n-1
+                    i--;                     // T(n) = n -1
                 }
-                instance[i + 1] = key;            
+                instance[i + 1] = key;          // T(n) = n- 1
             }
             return instance;
         }
 
         public static List<int> InsertionBinarySort(List<int> instance)
-        {
-            int pos = 0;
-
-            for (int j = 1; j < instance.Count; j++)
+        {    
+            for (int j = 1; j < instance.Count; j++) // T(n) = n
             {
-                var key = instance[j];
+                var key = instance[j]; // T(n) = n-1            
+                int i = j - 1; // T(n) = n -1
 
-                int u = key;
-                int i = j - 1;
-                instance[pos] = instance[i];
-                int location = BinarySearch(instance, 0, j, key);
+                int location = BinarySearch(instance, 0, j, key);  // T(n) = n (lg n)
 
-                while (i >= location && instance[i] > key)
+                while (i >= location && instance[i] > key) // The while loop based on average case so will execute n(n - 1) /2
                 {
-                    instance[i + 1] = instance[i];
+                    instance[i + 1] = instance[i];  // T(n) = n -1
                     i--;
                 }
-
-                instance[i + 1] = key;
-                pos++;
+                instance[i + 1] = key;     // T(n) = n - 1
             }
 
             return instance;
@@ -97,26 +91,26 @@ namespace InsertionSortProject
 
         public static int BinarySearch(List<int> sortedArray, int l, int h, int key)
         {
-            if (h <= l)
-                return (key > sortedArray[l]) ? l + 1 : l;
-            int mid = (l + h) / 2;
-            if (sortedArray[mid] == key)
+            if (h <= l) // T(n) = 1
+                return (key > sortedArray[l]) ? l + 1 : l;  // T(n) = 1
+            int mid = (l + h) / 2; // T(n) = 1
+            if (sortedArray[mid] == key) // T(n) = 1
             {
-                return mid + 1;
+                return mid + 1; // T(n) = 1
             }
-            if (sortedArray[mid] > key)
+            if (sortedArray[mid] > key) // T(n) = 1
             {
-                return BinarySearch(sortedArray, l, mid - 1, key);
+                return BinarySearch(sortedArray, l, mid - 1, key); // T(n) = n /2
             }
             else
-                return BinarySearch(sortedArray, mid + 1, h, key);
+                return BinarySearch(sortedArray, mid + 1, h, key); // T(n) = n /2
         }
 
         public static int LinearSearch(List<int> sortedArray, int key)
         {
-            for(int i = 0; i < sortedArray.Count; i++) 
+            for(int i = 0; i < sortedArray.Count; i++) // T(n) = n
             {
-                if(key <= sortedArray[i])  
+                if(key <= sortedArray[i])  // T(n) = n - 1
                 {
                     return i;  
                 }
